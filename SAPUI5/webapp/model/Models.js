@@ -1,23 +1,32 @@
-//@ts-nocheck
-sap.ui.define(
-  ["sap/ui/model/json/JSONModel"],
+// @ts-nocheck
+sap.ui.define([
+  "sap/ui/model/json/JSONModel",
+  "sap/ui/Device"
+],
   /**
-   *
    * @param {typeof sap.ui.model.json.JSONModel} JSONModel
+   * @param {typeof sap.ui.Device} Device
    */
+  function (JSONModel, Device) {
+      "use strict";
 
-  function (JSONModel) {
-    "use strict";
+      return {
 
-    return {
-      createRecipient: function () {
-        var oData = {
-          recipient: {
-            name: "World",
+          createRecipient: function () {
+              var oData = {
+                  recipient: {
+                      name: "World"
+                  }
+              };
+
+              return new JSONModel(oData);
           },
-        };
-        return new JSONModel(oData);
-      },
-    };
-  }
-);
+
+          createDeviceModel: function() {
+              var oModel = new JSONModel(Device);
+              oModel.setDefaultBindingMode("OneWay");
+              return oModel;
+          }
+
+      }
+  }); 

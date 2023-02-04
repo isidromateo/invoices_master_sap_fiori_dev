@@ -17,12 +17,19 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/",
+        "uri": "/V2/Northwind/Northwind.svc",
         "type": "OData",
         "settings": {
-          "annotations": [],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
+        }
+      },
+      "northwind.svc": {
+        "uri": "Northwind/v2/northwind/northwind.svc/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
         }
       }
     }
@@ -73,10 +80,23 @@
         "type": "sap.ui.model.json.JSONModel",
         "uri": "view/Invoices.json"
       },
-      "": {
+      "northwind": {
         "dataSource": "mainService",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": false
+        }
+      },
+      "": {
+        "dataSource": "northwind.svc",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": false
+        }
       }
     },
     "resources": {
@@ -99,17 +119,29 @@
       "routes": [
         {
           "name": "RouteApp",
-          "pattern": "RouteApp",
-          "target": ["TargetApp"]
+          "pattern": "",
+          "target": ["TargetOverview"]
+        },
+        {
+          "name": "Details",
+          "pattern": "details/{invoicePath}",
+          "target": ["TargetDetails"]
         }
       ],
       "targets": {
-        "TargetApp": {
+        "TargetOverview": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "App",
-          "viewName": "App"
+          "viewId": "Overview",
+          "viewName": "Overview"
+        },
+        "TargetDetails": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Details",
+          "viewName": "Details"
         }
       }
     },
